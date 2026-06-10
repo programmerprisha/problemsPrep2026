@@ -1,18 +1,32 @@
 class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
-        HashMap<String, List<String>> tracker = new HashMap<>(); 
+        HashMap<String, List<String>> values = new HashMap<>(); 
 
         for (int i = 0; i < strs.length; i++) {
             String currWord = strs[i];
-            int count[] = new int[26];
+            int[] letters = new int[26];
             for (int k = 0; k < currWord.length(); k++) {
-                char currChar = currWord.charAt(k);
-                count[currChar - 'a']++; 
+                letters[currWord.charAt(k) - 'a']++; 
             }
-            String key = Arrays.toString(count);
-            tracker.putIfAbsent(key, new ArrayList<>());
-            tracker.get(key).add(currWord);
+            if (values.containsKey(Arrays.toString(letters))){
+                List<String> list = values.get(Arrays.toString(letters));
+                System.out.println("here");
+                list.add(currWord);
+                values.put(Arrays.toString(letters), list);
+            }
+            else {
+                List<String> list = new ArrayList<String>(); 
+                list.add(currWord);
+                values.put(Arrays.toString(letters), list);
+            }
         }
-        return new ArrayList<>(tracker.values());
+
+        List<List<String>> answer = new ArrayList<List<String>>(); 
+
+        for (List<String> val: values.values()) {
+            answer.add(val);
+        }
+        return answer;
+        
     }
 }

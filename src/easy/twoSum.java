@@ -2,23 +2,16 @@ class Solution {
     public int[] twoSum(int[] nums, int target) {
         // prisha note: store index not value for value
         // key == nums[i] and value = i
-        HashMap<Integer, Integer> index = new HashMap<>(); 
+       HashMap<Integer, Integer> map = new HashMap<>(); 
 
-        for (int i = 0; i < nums.length; i++) {
-            index.put(nums[i], i);
-        }  
-
-        // prisha note: whole problem = nums[i] + nums[j] = target
-
-        for (int i = 0; i < nums.length; i++) {
-            int diff = target - nums[i]; 
-
-            if (index.containsKey(diff) && index.get(diff) != i) {
-                return new int[]{i, index.get(diff)};
+       for (int i = 0; i < nums.length; i++) {
+            int curr = nums[i];
+            if (map.containsKey(target - curr)) {
+                return new int[] {map.get(target - curr), i};
             }
-            
-        }
+            map.put(curr, i);
+       }
 
-        return new int[0];
+       return new int[0];
     }
 }
